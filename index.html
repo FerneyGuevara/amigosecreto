@@ -8,110 +8,187 @@
 <style>
 :root{color-scheme:light;--bg:#eef5ef;--card:#fff;--ink:#14301f;--mute:#5b7566;--line:#cfe0d3;--accent:#c2185b;--accent-ink:#fff;--gold:#f0bd3b;--chip:#dcebdf;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0f1f16;--card:#172a1f;--ink:#e8f3ea;--mute:#98b3a1;--line:#2a4535;--accent:#ff5c9a;--accent-ink:#2a0615;--gold:#f0bd3b;--chip:#1f3829}}
-:root[data-theme="dark"]{color-scheme:dark;--bg:#0f1f16;--card:#172a1f;--ink:#e8f3ea;--mute:#98b3a1;--line:#2a4535;--accent:#ff5c9a;--accent-ink:#2a0615;--gold:#f0bd3b;--chip:#1f3829}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0f1f16;--card:#172a1f;--ink:#e8f3ea;--mute:#98b3a1;--line:#2a4535;--accent:#ff5c9a;--accent-ink:#2a0615;--chip:#1f3829}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0f1f16;--card:#172a1f;--ink:#e8f3ea;--mute:#98b3a1;--line:#2a4535;--accent:#ff5c9a;--accent-ink:#2a0615;--chip:#1f3829}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 "DM Sans",system-ui,sans-serif;min-height:100vh}
-main{max-width:560px;margin:0 auto;padding:28px 18px 60px}
-h1{font:800 clamp(34px,9vw,52px)/1 "Bricolage Grotesque",Georgia,serif;margin:0 0 6px;letter-spacing:-.02em}
-.sub{color:var(--mute);margin:0 0 24px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:16px}
+main{max-width:600px;margin:0 auto;padding:26px 18px 60px}
+h1{font:800 clamp(34px,9vw,52px)/1 "Bricolage Grotesque",Georgia,serif;margin:0 0 14px;letter-spacing:-.02em}
 h2{font:700 18px/1.3 "Bricolage Grotesque",Georgia,serif;margin:0 0 10px}
-.row{display:flex;gap:8px}
-input{flex:1;min-width:0;font:inherit;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:16px}
+.info{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.info span{background:var(--gold);color:#2b2108;border-radius:999px;padding:6px 14px;font-weight:700;font-size:14px}
+.row{display:flex;gap:8px;margin-bottom:8px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+label{display:block;font-size:13px;color:var(--mute);font-weight:500;margin-bottom:2px}
+input{width:100%;font:inherit;padding:11px 13px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
 input:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 button{font:700 16px "DM Sans",sans-serif;border:0;border-radius:10px;padding:12px 16px;cursor:pointer;background:var(--accent);color:var(--accent-ink)}
 button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+button.sm{padding:8px 12px;font-size:14px}
 button:disabled{opacity:.45;cursor:not-allowed}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.chip{display:inline-flex;align-items:center;gap:6px;background:var(--chip);border-radius:999px;padding:6px 8px 6px 14px;font-weight:500}
-.chip button{background:none;color:var(--mute);padding:0 6px;font-size:18px;line-height:1}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
 .pick{background:var(--chip);color:var(--ink);border-radius:999px;padding:9px 16px;font-weight:500}
 .pick.on{background:var(--ink);color:var(--bg)}
+.arow{display:grid;grid-template-columns:minmax(80px,1fr) 2fr auto;gap:8px;align-items:center;margin-bottom:8px}
 .stats{display:flex;gap:10px;margin-bottom:16px}
 .stat{flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
 .stat b{display:block;font:800 30px/1 "Bricolage Grotesque",Georgia,serif}
-.stat span{color:var(--mute);font-size:14px}
-.tag{position:relative;background:var(--gold);color:#2b2108;border-radius:6px 22px 22px 6px;padding:34px 26px 30px 56px;margin:6px 0 16px;text-align:left;animation:unwrap .55s cubic-bezier(.2,.9,.3,1.2)}
+.stat span,.warn{color:var(--mute);font-size:14px}
+.bar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.tag{position:relative;background:var(--gold);color:#2b2108;border-radius:6px 22px 22px 6px;padding:34px 26px 30px 56px;margin:6px 0 16px;animation:unwrap .55s cubic-bezier(.2,.9,.3,1.2)}
 .tag::before{content:"";position:absolute;left:18px;top:50%;width:18px;height:18px;margin-top:-9px;border-radius:50%;background:var(--bg);box-shadow:inset 0 0 0 3px rgba(0,0,0,.18)}
-.tag small{display:block;font-weight:500;opacity:.8}
+.tag small{display:block;font-weight:500}
 .tag strong{display:block;font:800 clamp(34px,10vw,54px)/1.05 "Bricolage Grotesque",Georgia,serif;overflow-wrap:anywhere}
 @keyframes unwrap{from{transform:rotate(-6deg) scale(.7);opacity:0}to{transform:none;opacity:1}}
 @media (prefers-reduced-motion:reduce){.tag{animation:none}}
-.warn{color:var(--mute);font-size:14px;margin:0 0 12px}
 .err{color:var(--accent);font-weight:500;margin:8px 0 0}
-.foot{text-align:center;margin-top:24px}
+.foot{text-align:center;margin-top:20px}
 </style>
 </head>
 <body>
 <main>
 <h1>Amigo secreto</h1>
-<p class="sub">Cada persona saca un nombre al azar. Quien sale elegido deja de estar disponible.</p>
 <div id="app"></div>
 </main>
 <script>
-var KEY="amigo-secreto-v1";
-var S={phase:"setup",names:[],hints:{},pending:[],pool:[],giver:null,reveal:null,err:""};
-function load(){try{var r=localStorage.getItem(KEY);if(r){var o=JSON.parse(r);if(o&&o.phase)S=o;if(!S.hints)S.hints={};S.err=""}}catch(e){}}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
-function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
-function addName(){
-  var el=document.getElementById("n"),v=el.value.trim();
-  if(!v)return;
-  if(S.names.some(function(n){return n.toLowerCase()===v.toLowerCase()})){S.err="Ese nombre ya está en la lista.";render();return}
-  S.names.push(v);var hv=document.getElementById("h").value.trim();if(hv)S.hints[v]=hv;S.err="";save();render();document.getElementById("n").focus();
+var LK="as-local-v2",RK="as-reveal",AK="as-admin";
+var ADM="085bb3dd9613051bcb9ed23b4858bb741c9664e68d39b2ed61b70fc552d12469";
+var D={names:[],hints:{},pending:[],pool:[],started:false,round:1,date:"",place:"",min:70000,max:80000};
+var S=norm(null),ref=null,ready=false,V="play",admin=false,err="",giver=null,rev=null;
+function norm(o){var r={};for(var k in D){r[k]=(o&&o[k]!==undefined)?o[k]:JSON.parse(JSON.stringify(D[k]))}return r}
+function cl(){return JSON.parse(JSON.stringify(S))}
+function esc(t){return String(t).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function money(n){return "$"+Number(n).toLocaleString("es-CO")}
+function lget(k,s){try{return (s?sessionStorage:localStorage).getItem(k)}catch(e){return null}}
+function lset(k,v,s){try{(s?sessionStorage:localStorage).setItem(k,v)}catch(e){}}
+async function put(){
+  if(ref){await ref.set(S)}else{lset(LK,JSON.stringify(S))}
 }
-function removeName(i){delete S.hints[S.names[i]];S.names.splice(i,1);S.err="";save();render()}
-function start(){S.phase="draw";S.pending=S.names.slice();S.pool=S.names.slice();S.giver=null;S.reveal=null;S.err="";save();render()}
-function choose(i){S.giver=S.pending[i];S.err="";save();render()}
-function draw(){
-  var g=S.giver;if(!g)return;
+async function commit(fn){
+  var n=cl();fn(n);S=n;err="";
+  try{await put()}catch(e){err="No se pudo guardar. Intenta de nuevo."}
+  render();
+}
+var A={
+  add:function(){
+    var v=document.getElementById("n").value.trim(),h=document.getElementById("h").value.trim();
+    if(!v)return;
+    if(S.names.some(function(x){return x.toLowerCase()===v.toLowerCase()})){err="Ese nombre ya está en la lista.";render();return}
+    commit(function(n){n.names.push(v);if(h)n.hints[v]=h});
+  },
+  rm:function(i){commit(function(n){delete n.hints[n.names[i]];n.names.splice(i,1)})},
+  savecfg:function(){
+    var mn=parseInt(document.getElementById("cmin").value,10),mx=parseInt(document.getElementById("cmax").value,10);
+    if(!(mn>0)||!(mx>mn)){err="El valor máximo debe ser mayor que el mínimo.";render();return}
+    var d=document.getElementById("cd").value,p=document.getElementById("cp").value.trim();
+    commit(function(n){n.date=d;n.place=p;n.min=mn;n.max=mx});
+  },
+  start:function(){commit(function(n){n.started=true;n.pending=n.names.slice();n.pool=n.names.slice();n.round++})},
+  reset:function(){if(!confirm("¿Reiniciar el sorteo? Se pierden todas las asignaciones."))return;rev=null;lset(RK,"");commit(function(n){n.started=false;n.pending=[];n.pool=[];n.round++})},
+  pick:function(i){giver=S.pending[i];err="";render()},
+  draw:draw,
+  hide:function(){rev=null;lset(RK,"");render()},
+  view:function(v){V=v;err="";render()},
+  login:login,
+  logout:function(){admin=false;V="play";lset(AK,"",true);render()}
+};
+async function draw(){
+  var g=giver;if(!g)return;
+  if(ref){try{var s=await ref.get();if(s.exists)S=norm(s.data())}catch(e){}}
+  if(S.pending.indexOf(g)<0){giver=null;err="Esa persona ya sacó su amigo secreto.";render();return}
   var rest=S.pending.filter(function(n){return n!==g});
   var cand=S.pool.filter(function(p){
     if(p===g)return false;
     var rp=S.pool.filter(function(x){return x!==p});
     return !(rest.length===1&&rp.length===1&&rest[0]===rp[0]);
   });
-  if(!cand.length){S.err="No hay opciones válidas. Reinicia el sorteo.";render();return}
+  if(!cand.length){err="No hay opciones válidas. El administrador debe reiniciar el sorteo.";render();return}
   var t=cand[Math.floor(Math.random()*cand.length)];
-  S.pool=S.pool.filter(function(x){return x!==t});
-  S.pending=rest;S.reveal={giver:g,target:t};S.giver=null;S.err="";save();render();
+  var n=cl();n.pool=n.pool.filter(function(x){return x!==t});n.pending=rest;S=n;
+  try{await put()}catch(e){err="No se pudo guardar. Intenta de nuevo.";render();return}
+  rev={giver:g,target:t,round:S.round};lset(RK,JSON.stringify(rev));giver=null;err="";render();
 }
-function hide(){S.reveal=null;if(!S.pending.length)S.phase="done";save();render()}
-function reset(){if(!confirm("¿Reiniciar todo? Se pierden las asignaciones."))return;S={phase:"setup",names:S.names,hints:S.hints,pending:[],pool:[],giver:null,reveal:null,err:""};save();render()}
-function render(){
-  var h="";
-  if(S.phase==="setup"){
-    h+='<div class="card"><h2>Participantes</h2><div class="row"><input id="n" placeholder="Escribe un nombre" autocomplete="off"><button id="add">Agregar</button></div><div class="row" style="margin-top:8px"><input id="h" placeholder="Pista opcional (ej. le gusta el café)" autocomplete="off"></div>';
-    if(S.err)h+='<p class="err">'+esc(S.err)+'</p>';
-    h+='<div class="chips">'+S.names.map(function(n,i){return '<span class="chip">'+esc(n)+(S.hints[n]?' <small style="color:var(--mute)">(pista: '+esc(S.hints[n])+')</small>':'')+'<button data-rm="'+i+'" aria-label="Quitar '+esc(n)+'">×</button></span>'}).join("")+'</div></div>';
-    h+='<button id="go"'+(S.names.length<3?" disabled":"")+'>Empezar sorteo</button>';
-    if(S.names.length<3)h+='<p class="warn" style="margin-top:10px">Agrega al menos 3 personas para empezar.</p>';
-  }else{
-    h+='<div class="stats"><div class="stat"><b>'+S.pending.length+'</b><span>por sacar</span></div><div class="stat"><b>'+S.pool.length+'</b><span>disponibles</span></div></div>';
-    if(S.reveal){
-      h+='<div class="card"><h2>'+esc(S.reveal.giver)+', tu amigo secreto es:</h2><div class="tag"><small>Para quien compras</small><strong>'+esc(S.reveal.target)+'</strong>'+(S.hints[S.reveal.target]?'<small style="margin-top:10px">Pista: '+esc(S.hints[S.reveal.target])+'</small>':'')+'</div><p class="warn">Memoriza el nombre y toca el botón antes de pasar el celular. Este nombre ya salió de la lista.</p><button id="hide">Listo, ocultar nombre</button></div>';
-    }else if(S.phase==="done"){
-      h+='<div class="card"><h2>Sorteo completo</h2><p>Todos ya tienen su amigo secreto. Guarden el secreto.</p></div>';
-    }else{
-      h+='<div class="card"><h2>¿Quién eres?</h2><div class="chips" style="margin-top:0">'+S.pending.map(function(n,i){return '<button class="pick'+(n===S.giver?" on":"")+'" data-pick="'+i+'">'+esc(n)+'</button>'}).join("")+'</div></div>';
-      h+='<button id="draw"'+(S.giver?"":" disabled")+'>Sacar mi amigo secreto</button>';
-      if(S.err)h+='<p class="err">'+esc(S.err)+'</p>';
-    }
-    h+='<div class="foot"><button class="ghost" id="reset">Reiniciar sorteo</button></div>';
+async function login(){
+  var v=document.getElementById("ac").value.trim();
+  try{
+    var b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(v));
+    var h=Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0")}).join("");
+    if(h===ADM){admin=true;lset(AK,"1",true);V="admin";err=""}else{err="Código incorrecto."}
+  }catch(e){err="No se pudo validar el código en este navegador."}
+  render();
+}
+function info(){
+  var h='<div class="info"><span>Regalo: '+money(S.min)+' a '+money(S.max)+'</span>';
+  if(S.date){var d=new Date(S.date+"T00:00:00");h+='<span>'+esc(d.toLocaleDateString("es-CO",{weekday:"long",day:"numeric",month:"long",year:"numeric"}))+'</span>'}
+  if(S.place)h+='<span>'+esc(S.place)+'</span>';
+  return h+'</div>';
+}
+function adminPanel(){
+  var h='<div class="card"><h2>Configuración</h2><div class="grid"><div><label for="cd">Fecha del juego</label><input id="cd" type="date" value="'+esc(S.date)+'"></div><div><label for="cp">Lugar (opcional)</label><input id="cp" value="'+esc(S.place)+'" data-enter="savecfg"></div><div><label for="cmin">Valor mínimo</label><input id="cmin" type="number" step="1000" value="'+S.min+'"></div><div><label for="cmax">Valor máximo</label><input id="cmax" type="number" step="1000" value="'+S.max+'"></div></div><button class="sm" data-a="savecfg">Guardar configuración</button></div>';
+  h+='<div class="card"><h2>Participantes ('+S.names.length+')</h2>';
+  if(!S.started){h+='<div class="grid"><div><label for="n">Nombre</label><input id="n" autocomplete="off" data-enter="add"></div><div><label for="h">Pista (opcional)</label><input id="h" autocomplete="off" data-enter="add"></div></div><button class="sm" data-a="add" style="margin-bottom:14px">Agregar</button>'}
+  else h+='<p class="warn">El sorteo está abierto: para agregar o quitar nombres, reinicia el sorteo.</p>';
+  h+=S.names.map(function(n,i){return '<div class="arow"><b>'+esc(n)+'</b><input data-h="'+i+'" value="'+esc(S.hints[n]||"")+'" placeholder="Pista" aria-label="Pista de '+esc(n)+'">'+(S.started?'<span></span>':'<button class="ghost sm" data-a="rm" data-i="'+i+'" aria-label="Quitar '+esc(n)+'">×</button>')+'</div>'}).join("");
+  h+='</div><div class="card"><h2>Sorteo</h2>';
+  if(!S.started){h+='<button data-a="start"'+(S.names.length<3?" disabled":"")+'>Abrir sorteo</button>'+(S.names.length<3?'<p class="warn">Agrega al menos 3 personas.</p>':'')}
+  else{
+    var done=S.names.filter(function(n){return S.pending.indexOf(n)<0});
+    h+='<p><b>Ya sacaron ('+done.length+'):</b> '+(done.map(esc).join(", ")||"nadie")+'</p><p><b>Faltan ('+S.pending.length+'):</b> '+(S.pending.map(esc).join(", ")||"nadie")+'</p><button class="ghost sm" data-a="reset">Reiniciar sorteo</button>';
   }
-  document.getElementById("app").innerHTML=h;
-  var q=function(i){return document.getElementById(i)};
-  if(q("add")){q("add").onclick=addName;q("n").onkeydown=q("h").onkeydown=function(e){if(e.key==="Enter")addName()}}
-  if(q("go"))q("go").onclick=start;
-  if(q("draw"))q("draw").onclick=draw;
-  if(q("hide"))q("hide").onclick=hide;
-  if(q("reset"))q("reset").onclick=reset;
-  document.querySelectorAll("[data-rm]").forEach(function(b){b.onclick=function(){removeName(+b.dataset.rm)}});
-  document.querySelectorAll("[data-pick]").forEach(function(b){b.onclick=function(){choose(+b.dataset.pick)}});
+  return h+'</div>';
 }
-load();render();
+function play(){
+  var h='';
+  if(!S.started){return '<div class="card"><h2>El sorteo aún no empieza</h2><p>El administrador abrirá el sorteo cuando todos estén en la lista. Vuelve a entrar más tarde.</p></div>'}
+  h+='<div class="stats"><div class="stat"><b>'+S.pending.length+'</b><span>por sacar</span></div><div class="stat"><b>'+S.pool.length+'</b><span>disponibles</span></div></div>';
+  if(rev&&rev.round===S.round){
+    var hint=S.hints[rev.target];
+    h+='<div class="card"><h2>'+esc(rev.giver)+', tu amigo secreto es:</h2><div class="tag"><small>Para quien compras</small><strong>'+esc(rev.target)+'</strong>'+(hint?'<small style="margin-top:10px">Pista: '+esc(hint)+'</small>':'')+'</div><p class="warn">Valor del regalo: '+money(S.min)+' a '+money(S.max)+'. Memoriza el nombre y oculta antes de pasar el celular.</p><button data-a="hide">Listo, ocultar nombre</button></div>';
+  }else if(!S.pending.length){h+='<div class="card"><h2>Sorteo completo</h2><p>Todos ya tienen su amigo secreto. Guarden el secreto.</p></div>'}
+  else{
+    h+='<div class="card"><h2>¿Quién eres?</h2><div class="chips">'+S.pending.map(function(n,i){return '<button class="pick'+(n===giver?" on":"")+'" data-a="pick" data-i="'+i+'">'+esc(n)+'</button>'}).join("")+'</div></div><button data-a="draw"'+(giver?"":" disabled")+'>Sacar mi amigo secreto</button>';
+  }
+  return h;
+}
+function render(){
+  var h='';
+  if(!ready){document.getElementById("app").innerHTML='<p class="warn">Cargando…</p>';return}
+  h+=info();
+  if(admin){h+='<div class="bar"><button class="'+(V==="admin"?"":"ghost ")+'sm" data-a="view" data-i="admin">Panel admin</button><button class="'+(V==="play"?"":"ghost ")+'sm" data-a="view" data-i="play">Jugar</button><button class="ghost sm" data-a="logout">Salir</button></div>'}
+  if(V==="login"&&!admin){h+='<div class="card"><h2>Administrador</h2><label for="ac">Código de acceso</label><div class="row"><input id="ac" type="password" inputmode="numeric" autocomplete="off" data-enter="login"><button data-a="login">Entrar</button></div></div>'}
+  else if(admin&&V==="admin")h+=adminPanel();
+  else h+=play();
+  if(err)h+='<p class="err">'+esc(err)+'</p>';
+  if(!ref)h+='<p class="warn">Modo local: los datos solo se guardan en este dispositivo.</p>';
+  if(!admin&&V!=="login")h+='<div class="foot"><button class="ghost sm" data-a="view" data-i="login">Soy administrador</button></div>';
+  document.getElementById("app").innerHTML=h;
+}
+var app=document.getElementById("app");
+app.onclick=function(e){var t=e.target.closest("[data-a]");if(t&&!t.disabled)A[t.dataset.a](t.dataset.i)};
+app.onkeydown=function(e){if(e.key==="Enter"&&e.target.dataset.enter)A[e.target.dataset.enter]()};
+app.onchange=function(e){var i=e.target.dataset.h;if(i===undefined)return;var nm=S.names[+i],v=e.target.value.trim();commit(function(n){if(v)n.hints[nm]=v;else delete n.hints[nm]})};
+(async function(){
+  admin=lget(AK,true)==="1";if(admin)V="admin";
+  try{var r=JSON.parse(lget(RK)||"null");if(r&&r.giver)rev=r}catch(e){}
+  try{
+    var db=window.claude&&await claude.use("db");
+    if(db){
+      ref=db.doc("game/state");
+      ref.onSnapshot(function(s){
+        S=norm(s.exists?s.data():null);ready=true;
+        var a=document.activeElement;if(a&&a.tagName==="INPUT"&&app.contains(a))return;
+        render();
+      },function(){});
+      setTimeout(function(){if(!ready){ready=true;render()}},4000);
+      return;
+    }
+  }catch(e){}
+  try{var l=lget(LK);if(l)S=norm(JSON.parse(l))}catch(e){}
+  ready=true;render();
+})();
+render();
 </script>
 </body>
 </html>
