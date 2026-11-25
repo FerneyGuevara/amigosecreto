@@ -85,6 +85,12 @@ var A={
     var d=document.getElementById("cd").value,p=document.getElementById("cp").value.trim();
     commit(function(n){n.date=d;n.place=p;n.min=mn;n.max=mx});
   },
+  open:async function(){
+    if(!S.started&&S.names.length<3){err="Agrega al menos 3 personas.";render();return}
+    if(!confirm("¿Abrir el juego? Se cerrará la configuración y los participantes podrán sacar su amigo secreto."))return;
+    if(!S.started){await commit(function(n){n.started=true;n.pending=n.names.slice();n.pool=n.names.slice();n.round++});if(err)return}
+    admin=false;V="play";lset(AK,"",true);render();
+  },
   start:function(){commit(function(n){n.started=true;n.pending=n.names.slice();n.pool=n.names.slice();n.round++})},
   reset:function(){if(!confirm("¿Reiniciar el sorteo? Se pierden todas las asignaciones."))return;rev=null;lset(RK,"");commit(function(n){n.started=false;n.pending=[];n.pool=[];n.round++})},
   pick:function(i){giver=S.pending[i];err="";render()},
@@ -132,10 +138,10 @@ function adminPanel(){
   else h+='<p class="warn">El sorteo está abierto: para agregar o quitar nombres, reinicia el sorteo.</p>';
   h+=S.names.map(function(n,i){return '<div class="arow"><b>'+esc(n)+'</b><input data-h="'+i+'" value="'+esc(S.hints[n]||"")+'" placeholder="Pista" aria-label="Pista de '+esc(n)+'">'+(S.started?'<span></span>':'<button class="ghost sm" data-a="rm" data-i="'+i+'" aria-label="Quitar '+esc(n)+'">×</button>')+'</div>'}).join("");
   h+='</div><div class="card"><h2>Sorteo</h2>';
-  if(!S.started){h+='<button data-a="start"'+(S.names.length<3?" disabled":"")+'>Abrir sorteo</button>'+(S.names.length<3?'<p class="warn">Agrega al menos 3 personas.</p>':'')}
+  if(!S.started){h+='<p class="warn">Cuando la lista esté completa, abre el juego: se cierra la configuración y los participantes pueden sacar su amigo secreto.</p><button data-a="open"'+(S.names.length<3?" disabled":"")+'>Abrir juego a los participantes</button>'+(S.names.length<3?'<p class="warn">Agrega al menos 3 personas.</p>':'')}
   else{
     var done=S.names.filter(function(n){return S.pending.indexOf(n)<0});
-    h+='<p><b>Ya sacaron ('+done.length+'):</b> '+(done.map(esc).join(", ")||"nadie")+'</p><p><b>Faltan ('+S.pending.length+'):</b> '+(S.pending.map(esc).join(", ")||"nadie")+'</p><button class="ghost sm" data-a="reset">Reiniciar sorteo</button>';
+    h+='<p><b>Ya sacaron ('+done.length+'):</b> '+(done.map(esc).join(", ")||"nadie")+'</p><p><b>Faltan ('+S.pending.length+'):</b> '+(S.pending.map(esc).join(", ")||"nadie")+'</p><button data-a="open" style="margin-right:8px">Cerrar configuración y abrir juego</button><button class="ghost sm" data-a="reset">Reiniciar sorteo</button>';
   }
   return h+'</div>';
 }
